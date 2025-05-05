@@ -7,7 +7,7 @@ Egy Laravel keretrendszer alapú alkalmazás készítése, ami különböző ese
 1. Egy Laravel Flux Starter kit-et használtam kiinduló alapnak. Ez egy tailwind és liwewire alapú alapcsomag. A táblázatos megjelenítéshez a PowerGrid nevű csomagot használtam.
 2. Elvégeztem a konfigurációkat, fordításokat.
 3. Először megterveztem a modelleket - User, Events, Reservation - és a hozzájuk tartozó migrációkat és seedereket.
-4. Utána megírtam a szükséges rooting fájlt és a hozzá tartozó Controllereket.
+4. Utána megírtam a szükséges routing fájlt és a hozzá tartozó Controllereket.
 5. Létrehoztam a szükséges view, livewire és Powergrid komponenseket.
 6. A Powergrid komponenseknél megírtam a különböző Eloquent queryket és eseményeket pl. rekord törlése.
 
