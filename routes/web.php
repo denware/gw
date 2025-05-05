@@ -2,7 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\EnsureUserHasRole;
+
+use App\Http\Controllers\EventShowController;
+
 use Livewire\Volt\Volt;
+
 
 
 /*
@@ -15,17 +19,17 @@ Route::get('/', function () {
     return view('index');
 })->name('home');
 
+
+/*
 Route::get('/event/{id}', function (string $id) {
-    return 'Event '.$id;
-});
+    return view('event', [$id]);
+})->name('event');
+*/
+Route::get('/event/{id}', [EventShowController::class, 'show']);
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
-	
-Route::view('events', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('events');
 
 Route::view('edit-booking', 'dashboard')
     ->middleware(['auth', 'verified'])

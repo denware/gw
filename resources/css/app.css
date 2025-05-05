@@ -101,3 +101,8 @@ select:focus[data-flux-control] {
 @import "flatpickr/dist/flatpickr.min.css";
 
 @import "../css/flatpickr-dark-gw.css";
+
+
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';

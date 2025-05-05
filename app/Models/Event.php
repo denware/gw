@@ -26,7 +26,7 @@ class Event extends Model
         'start',
         'stop',
         'seats',
-        'sold'
+        'free'
     ];
 	
 }

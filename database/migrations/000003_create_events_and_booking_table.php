@@ -20,7 +20,7 @@ return new class extends Migration
 			$table->dateTime('start', precision: 0);
 			$table->dateTime('stop', precision: 0);
             $table->smallInteger('seats');
-			$table->smallInteger('sold')->default(0);
+			$table->smallInteger('free');
             $table->timestamps();
         });
 		

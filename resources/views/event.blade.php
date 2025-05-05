@@ -49,7 +49,7 @@
             @endif
         </header>
         <div class="flex w-full justify-center grow transition-opacity opacity-100 duration-750 starting:opacity-0">
-            <main class="flex flex-col w-full lg:max-w-4xl max-w-[335px] justify-center ">		
+            <main class="w-full lg:max-w-4xl max-w-[335px] ">		
 			@auth
 				<!-- registered users -->
 				@if (auth()->user()->role ==='user')
@@ -64,8 +64,10 @@
 			@guest
 					<div class="w-full lg:max-w-4xl max-w-[335px] text-right dark:text-white">Helló vendég!</div>
 			@endguest
-					<h1 class="w-full lg:max-w-4xl max-w-[335px] text-3xl font-[Calibri] font-black text-black dark:text-white">Események listája</h1>
-					<livewire:events-table class="dark:bg-pg-primary-800! text-sm!"/>			
+					
+
+			 
+			 <x-event.show :event="$event"/>
             </main>
         </div>
 		<footer class="">

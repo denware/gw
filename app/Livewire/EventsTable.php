@@ -3,11 +3,19 @@
 namespace App\Livewire;
 
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Blade;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Livewire\Attributes\Layout;
+
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
-use Illuminate\Support\Facades\Blade;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
 use PowerComponents\LivewirePowerGrid\Facades\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridFields;
@@ -19,16 +27,18 @@ use PowerComponents\LivewirePowerGrid\Responsive;
 final class EventsTable extends PowerGridComponent
 {
     public string $tableName = 'EventsTableGuest';
+	
 
+	
     public function boot(): void
-    {
+    {	
         config(['livewire-powergrid.filter' => 'inside']);
-		
+
     }	
 	public bool $showFilters = true;
     public function setUp(): array
     {
-        $this->showCheckBox();
+        //$this->showCheckBox();
 
         return [
             PowerGrid::header()
@@ -70,8 +80,8 @@ final class EventsTable extends PowerGridComponent
             ->add('start_formatted', function ($events) { return date('H:i',strtotime($events->start)); }) 
             ->add('stop_formatted', function ($events) { return date('H:i',strtotime($events->stop)); }) 
             ->add('seats')
-            ->add('sold')
-            ->add('free', function ($events) { return $events->seats - $events->sold;  })
+            ->add('free')
+            ->add('sold', function ($events) { return $events->seats - $events->free;  })
             ->add('created_at');
     }
 
@@ -94,7 +104,7 @@ final class EventsTable extends PowerGridComponent
                 ->searchable(),
 
             Column::make('Name', 'name')
-				->title('Név')
+				->title('Típus')
 				->contentClasses('whitespace-normal! text-sm!')
                 ->sortable()
                 ->searchable(),
@@ -134,15 +144,16 @@ final class EventsTable extends PowerGridComponent
 				isForceHidden: false),
 				
             Column::make('Sold', 'sold')
-				->title('Eladva')
+				->title('Eladott')
 				->contentClasses('whitespace-normal! text-sm!')
 				->sortable()
 				->hidden(isHidden: true, 
 				isForceHidden: false),
 				
-            Column::make('Sold', 'free')
+            Column::make('Free', 'free', dataField: 'free')
 				->contentClasses('text-sm!')
-				->title('Jegyek'),
+				->sortable()
+				->title('Helyek'),
             
 			/*
 			Column::make('Created at', 'created_at')
@@ -176,11 +187,11 @@ final class EventsTable extends PowerGridComponent
     {
         return [
             Button::add('view')
-                ->slot('Megnéz')
-                ->id()
-                ->class('inline-block px-5 py-1.5 border border-transparent  rounded-sm text-sm leading-normal text-white! bg-[#00A0E3]! hover:bg-[#0080B3]!')
+                ->icon('default-eye')
+                ->class('inline-block px-5 py-1.5 border border-transparent  rounded-sm text-sm leading-normal stroke-white! text-white! bg-[#00A0E3]! hover:bg-[#0080B3]!')
                 //->dispatch('edit', ['rowId' => $row->id])
 				->tag('a')
+				->tooltip('MEGTEKINT')
 				->attributes([
 				'href' => url('/event/' . $row->id),
 				])

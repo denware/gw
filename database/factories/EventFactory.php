@@ -19,6 +19,7 @@ class EventFactory extends Factory
     public function definition(): array
     {
 		$day = rand(2, 60);
+		$seats = rand(40, 80);
         return [
             'name' =>  array_rand(array_flip(['Koncert', 'Előadás', 'Majális', 'Kerti party', 'Bányásznap', 'Rádió felvétel']), 1),
             'artist' => array_rand(array_flip(['Majka', 'Korda Gyuri', 'Tóth Gabi', 'Kovács Kati', 'Dopeman', 'Hajós András', 'Curtis', 'Varnus Xavér']), 1),
@@ -26,8 +27,8 @@ class EventFactory extends Factory
             'description' => fake()->paragraph(),
             'start' => now()->modify('+'. $day .' days'),
             'stop' => now()->modify('+'. $day .'days + 2 hours'),
-            'seats' => rand(40, 80),
-            'sold' => 0,
+            'seats' => $seats,
+            'free' => $seats,
         ];
     }
 }

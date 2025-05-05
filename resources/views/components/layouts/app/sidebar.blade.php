@@ -13,7 +13,7 @@
 
             <flux:navlist class="grid flex-col gap-2">
                 <flux:navlist.group :heading="__('Oldalak')" class="grid"></flux:navlist.group>
-                    <flux:navlist.item icon="home" :href="route('home')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Kezdőlap') }}</flux:navlist.item>
+                    <flux:navlist.item icon="calendar-days" :href="route('home')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Események') }}</flux:navlist.item>
                     <flux:navlist.item icon="rocket-launch" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Vezérlőpult') }}</flux:navlist.item>
 					@if (auth()->user()->role ==='admin')
 						<flux:navlist.item icon="megaphone" :href="route('admin/create-event')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Új Esemény') }}</flux:navlist.item>						

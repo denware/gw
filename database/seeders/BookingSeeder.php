@@ -45,7 +45,7 @@ class BookingSeeder extends Seeder
 			*/
 			
 			Event::where('id', $booking->event_id)
-			->increment('sold', $booking->seats);
+			->decrement('free', $booking->seats);
 			
 			//$this->command->info(print_r($eventRow));
 		}
