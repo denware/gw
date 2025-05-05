@@ -11,6 +11,12 @@ Egy Laravel keretrendszer alapú alkalmazás készítése, ami különböző ese
 5. Létrehoztam a szükséges view, livewire és Powergrid komponenseket.
 6. A Powergrid komponenseknél megírtam a különböző Eloquent queryket és eseményeket pl. rekord törlése.
 
+## Működés
+1. Az alkalmazás alaphelyzetben az események tábláját mutatja. A vendég felhasználókat toast üzenetben figyelmezteti.
+2. Belépve a vezérlőpultra kerülön itt, ha admin felhasználó - role - akkor a foglalásokat, a normál felhasználók a foglalásaikat látják.
+3. Mindkettő szabadon törölheti a beküldött illetve saját foglalásokat.
+4. A sidebaron lehet létrehozni eseményt az admin felhasználónak.
+
 ## Install
 ```
 composer install
