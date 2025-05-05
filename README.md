@@ -23,6 +23,7 @@ npm run build
 ```
 
 ## Képek
+![Clipboard_05-05-2025_01](https://github.com/user-attachments/assets/515fbd52-8446-4909-9fea-a46570f6f11b)
 ![Képernyőkép 2025-05-05 – 08 52 00](https://github.com/user-attachments/assets/7b6647df-1b45-474c-9bb4-3f8aabf14ba9)
 ![Képernyőkép 2025-05-05 – 08 52 16](https://github.com/user-attachments/assets/47fedeca-91f7-4725-b666-214b3b123dcf)
 ![Képernyőkép 2025-05-05 – 08 52 24](https://github.com/user-attachments/assets/aff930e6-a4cd-41a3-a190-64327ea1645e)
@@ -31,3 +32,6 @@ npm run build
 ![Képernyőkép 2025-05-05 – 08 53 20](https://github.com/user-attachments/assets/335adc55-1997-450c-9678-74565e81b159)
 ![Képernyőkép 2025-05-05 – 08 53 34](https://github.com/user-attachments/assets/73f51921-7173-4aae-a125-4483a2f6b573)
 ![Képernyőkép 2025-05-05 – 08 53 42](https://github.com/user-attachments/assets/495275db-e057-4877-9079-d52fb415454e)
+![Képernyőkép 2025-05-05 – 09 28 02](https://github.com/user-attachments/assets/402e2631-075f-499a-8784-e615aeaf2254)
+![Képernyőkép 2025-05-05 – 09 29 01](https://github.com/user-attachments/assets/d8d85c38-3301-44d2-810e-6c8f5dc6a36f)
+
