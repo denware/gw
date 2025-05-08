@@ -36,8 +36,7 @@ final class BookingsTable extends PowerGridComponent
 	use WithExport; 
     public string $tableName = 'bookings-table-mnbeei-table';
 	public bool $showFilters = true;
-	public $rowID;
-	public $__id;
+
 	
     public function setUp(): array
     {
@@ -70,7 +69,7 @@ final class BookingsTable extends PowerGridComponent
             ->select('bookings.*', 
 			'newUsers.name as user_name', 
 			'newEvents.artist as event_artist',
-			'newEvents.name as event_name',			
+			'newEvents.type as event_type',			
 			'newEvents.location as event_location',
 			'newEvents.start as event_start',
 			'newEvents.free as event_free',
@@ -86,6 +85,8 @@ final class BookingsTable extends PowerGridComponent
             ->add('user_id')
             ->add('user_name')
             ->add('seats')			
+            ->add('location')	
+            ->add('link_event_id', fn ($reservation) => Blade::render('<x-event-link id="' . $reservation->event_id . '"/>'))				
             ->add('event_id')
             ->add('event_artist')
             ->add('event_location')
@@ -93,14 +94,49 @@ final class BookingsTable extends PowerGridComponent
             ->add('event_start_formatted', fn ($reservation) => Carbon::parse($reservation->event_start)->format('Y. m. d. H:i'). " ")
             ->add('event_free')
             ->add('updated_at')
-            ->add('updated_at_formatted', fn ($reservation) => Carbon::parse($reservation->updated_at)->format('Y. m. d. H:i:s'). " ");
+            ->add('updated_at_formatted', fn ($reservation) => Carbon::parse($reservation->updated_at)->format('Y. m. d. H:i:s'). " ")
+			->add('action');
     }
 
     public function columns(): array
     {
         return [
+            Column::make('Event id', 'event_id')
+			->title('EID')
+			->sortable()
+			->hidden(isHidden: false, 
+			isForceHidden: false)			
+			->contentClasses('whitespace-normal! text-sm!'),
+			
+            Column::make('Event id', 'link_event_id')
+			->title('Esemény')
+			->hidden(isHidden: false, 
+			isForceHidden: false)			
+			->contentClasses('whitespace-normal! text-sm!'),
+
+            Column::make('Event id', 'event_artist', 'newEvents.artist')
+			->title('Előadó')
+			->sortable()
+			->contentClasses('whitespace-normal! text-sm!')			
+			,
+            Column::make('Event id', 'event_location', 'newEvents.location')
+			->title('Helyszín')
+			->sortable()
+			->searchable()
+			->contentClasses('whitespace-normal! text-sm!')			
+			,			
+            Column::make('Event id', 'event_start_formatted', 'newEvents.start')
+			->title('Dátum')
+			->sortable()
+			->contentClasses('whitespace-normal! text-sm!')
+			,
+            Column::make('Event id', 'event_free', 'newEvents.free')
+			->title('Szabad')
+			->sortable()
+			->contentClasses('whitespace-normal! text-sm!')
+			,
             Column::make('Id', 'id')
-			->title('#')
+			->title('#RID')
 			->sortable()
 			->contentClasses('whitespace-normal! text-sm!')			
 			,
@@ -127,44 +163,28 @@ final class BookingsTable extends PowerGridComponent
 			->title('Időpont')
 			->searchable()
 			->contentClasses('whitespace-normal! text-sm!')
-			,			
-            Column::make('Event id', 'event_id')
-			->title('Esemény')
-			->sortable()
-			->hidden(isHidden: true, 
-			isForceHidden: true)			
-			->contentClasses('whitespace-normal! text-sm!')			
-			,
-            Column::make('Event id', 'event_artist', 'newEvents.artist')
-			->title('Előadó')
-			->sortable()
-			->contentClasses('whitespace-normal! text-sm!')			
-			,
-            Column::make('Event id', 'event_location', 'newEvents.location')
-			->title('Helyszín')
-			->sortable()
-			->searchable()
-			->contentClasses('whitespace-normal! text-sm!')			
-			,			
-            Column::make('Event id', 'event_start_formatted', 'newEvents.start')
-			->title('Dátum')
-			->sortable()
-			->contentClasses('whitespace-normal! text-sm!')
-			,
-            Column::make('Event id', 'event_free', 'newEvents.free')
-			->title('Szabad')
-			->sortable()
-			->contentClasses('whitespace-normal! text-sm!')
 			,
             Column::action('Művelet')
-			->contentClasses('whitespace-normal! text-sm!'),		
+			->contentClasses('whitespace-normal! text-sm!'),
+			
         ];
     }
 
 	
+
     public function actions($row): array
     {
         return [
+/*		
+            Button::add('trash')
+				->icon('default-eye')
+				->tooltip('TÖRÖL')
+                ->class('cursor-pointer inline-block px-5 py-1.5 border border-transparent  rounded-sm text-sm leading-normal stroke-white!  text-white! bg-[#00A0E3]! hover:bg-[#0080B3]!')
+				->tag('a')
+				->attributes([
+					'href' => url('/event/' .$row->event_id ),
+				]),
+*/  	
             Button::add('trash')
 				->icon('default-trash')
 				->tooltip('TÖRÖL')
@@ -174,6 +194,14 @@ final class BookingsTable extends PowerGridComponent
 				//->emit('deleteUser', ['user' => '$row->id'])
         ];
     }
+    public function actions1($row): array
+    {
+        return [		
+
+				//->openModal('delete', ['key' => $row->id]),
+				//->emit('deleteUser', ['user' => '$row->id'])
+        ];
+    }		
 	/*
     #[\Livewire\Attributes\On('delete')]
     public function delete(string $component, array $arguments)

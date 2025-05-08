@@ -63,23 +63,20 @@
 			<!-- guest -->
 			@guest
 					<div class="w-full lg:max-w-4xl max-w-[335px] text-right dark:text-white">Helló vendég!</div>
+					
 			@endguest
 					<h1 class="w-full lg:max-w-4xl max-w-[335px] text-3xl font-[Calibri] font-black text-black dark:text-white">Események listája</h1>
-					<livewire:events-table class="dark:bg-pg-primary-800! text-sm!"/>			
+					<livewire:events-table class="dark:bg-pg-primary-800! text-sm!"/>
             </main>
         </div>
-		<footer class="">
+		<footer class="mt-24">
 			<a 
 				href="{{ route('home') }}" 
 			 wire:navigate>
 				<x-gw-logo-icon class="fill-current text-white dark:text-black" />
 			</a>
 		</footer>
-		@guest
-			<livewire:user-login-notification />
-			<x-toaster-hub />
-		@endguest
+		<x-toaster-hub/>
 	@fluxScripts
-	
     </body>
 </html>

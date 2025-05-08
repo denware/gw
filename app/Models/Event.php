@@ -19,12 +19,12 @@ class Event extends Model
      */
 
     protected $fillable = [
-        'name',
         'artist',
+        'type',		
         'location',
         'description',
         'start',
-        'stop',
+        'end',
         'seats',
         'free'
     ];

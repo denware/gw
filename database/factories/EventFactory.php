@@ -18,15 +18,15 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
-		$day = rand(2, 60);
-		$seats = rand(40, 80);
+		$day = rand(5, 60);
+		$seats = rand(40, 90);
         return [
-            'name' =>  array_rand(array_flip(['Koncert', 'Előadás', 'Majális', 'Kerti party', 'Bányásznap', 'Rádió felvétel']), 1),
+            'type' =>  array_rand(array_flip(['Koncert', 'Előadás', 'Majális', 'Kerti party', 'Bányásznap', 'Rádió felvétel']), 1),
             'artist' => array_rand(array_flip(['Majka', 'Korda Gyuri', 'Tóth Gabi', 'Kovács Kati', 'Dopeman', 'Hajós András', 'Curtis', 'Varnus Xavér']), 1),
             'location' => fake()->city(),
             'description' => fake()->paragraph(),
             'start' => now()->modify('+'. $day .' days'),
-            'stop' => now()->modify('+'. $day .'days + 2 hours'),
+            'end' => now()->modify('+'. $day .'days + 2 hours'),
             'seats' => $seats,
             'free' => $seats,
         ];

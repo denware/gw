@@ -5,6 +5,7 @@ namespace App\View\Components\Event;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use function Livewire\Volt\{state};
 
 class Show extends Component
 {
@@ -12,6 +13,7 @@ class Show extends Component
      * Create a new component instance.
      */
 	 
+	public $event;
 	
     public function __construct(public $event)
     {
@@ -23,6 +25,6 @@ class Show extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.event.show');
+        return view('components.event.edit');
     }
 }

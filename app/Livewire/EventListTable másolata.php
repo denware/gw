@@ -44,12 +44,12 @@ final class EventListTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('name')
             ->add('artist')
+            ->add('type')			
             ->add('location')
             ->add('description')
             ->add('start_formatted', fn (Event $model) => Carbon::parse($model->start)->format('d/m/Y H:i:s'))
-            ->add('stop_formatted', fn (Event $model) => Carbon::parse($model->stop)->format('d/m/Y H:i:s'))
+            ->add('end_formatted', fn (Event $model) => Carbon::parse($model->stop)->format('d/m/Y H:i:s'))
             ->add('seats')
             ->add('sold')
             ->add('created_at');
@@ -59,11 +59,12 @@ final class EventListTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Name', 'name')
-                ->sortable()
-                ->searchable(),
 
             Column::make('Artist', 'artist')
+                ->sortable()
+                ->searchable(),
+				
+            Column::make('Type', 'type')
                 ->sortable()
                 ->searchable(),
 

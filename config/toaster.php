@@ -43,14 +43,14 @@ return [
      *
      * Supported: true | false
      */
-    'replace' => false,
+    'replace' => true,
 
     /**
      * Prevent the display of duplicate toast messages.
      *
      * Supported: true | false
      */
-    'suppress' => false,
+    'suppress' => true,
 
     /**
      * Whether messages passed as translation keys should be translated automatically.

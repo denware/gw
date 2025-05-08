@@ -16,6 +16,9 @@ final class EventListTable extends PowerGridComponent
 {
     public string $tableName = 'event-list-table';
 	public ?string $eventid;
+	public string $sortField = 'id'; 
+	public string $sortDirection = 'desc';	
+ 
 	
     public function setUp(): array
     {
@@ -44,12 +47,12 @@ final class EventListTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('name')
             ->add('artist')
+            ->add('type')			
             ->add('location')
             ->add('description')
             ->add('start_formatted', fn (Event $model) => Carbon::parse($model->start)->format('d/m/Y H:i:s'))
-            ->add('stop_formatted', fn (Event $model) => Carbon::parse($model->stop)->format('d/m/Y H:i:s'))
+            ->add('end_formatted', fn (Event $model) => Carbon::parse($model->end)->format('d/m/Y H:i:s'))
             ->add('seats')
             ->add('sold')
             ->add('created_at');
@@ -59,14 +62,15 @@ final class EventListTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id'),
-            Column::make('Name', 'name')
-                ->sortable()
-                ->searchable(),
 
             Column::make('Artist', 'artist')
                 ->sortable()
                 ->searchable(),
 
+            Column::make('Type', 'type')
+                ->sortable()
+                ->searchable(),
+				
             Column::make('Location', 'location')
                 ->sortable()
                 ->searchable(),
@@ -78,7 +82,7 @@ final class EventListTable extends PowerGridComponent
             Column::make('Start', 'start_formatted', 'start')
                 ->sortable(),
 
-            Column::make('Stop', 'stop_formatted', 'stop')
+            Column::make('End', 'end_formatted', 'stop')
                 ->sortable(),
 
             Column::make('Seats', 'seats'),
@@ -98,7 +102,7 @@ final class EventListTable extends PowerGridComponent
     {
         return [
             Filter::datetimepicker('start'),
-            Filter::datetimepicker('stop'),
+            Filter::datetimepicker('end'),
         ];
     }
 

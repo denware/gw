@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id()->primary();
-            $table->string('name');
+            $table->string('type');
             $table->string('artist');
             $table->string('location');
             $table->text('description');
 			$table->dateTime('start', precision: 0);
-			$table->dateTime('stop', precision: 0);
+			$table->dateTime('end', precision: 0);
             $table->smallInteger('seats');
 			$table->smallInteger('free');
             $table->timestamps();

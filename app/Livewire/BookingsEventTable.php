@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Request;
+
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +20,7 @@ use Illuminate\Validation\Rules;
 use Livewire\Attributes\On;
 use Livewire\Volt\Component;
 
+use Livewire\Attributes\Url;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
@@ -31,13 +34,15 @@ use PowerComponents\LivewirePowerGrid\Components\SetUp\Exportable;
 
 use Masmerise\Toaster\Toaster;
 
-final class BookingsUserTable extends PowerGridComponent
+final class BookingsEventTable extends PowerGridComponent
 {
 	use WithExport; 
     public string $tableName = 'bookings-table-mnbeei-table';
 	public bool $showFilters = true;
-
+	public ?string $eventid;
 	
+
+	 
     public function setUp(): array
     {
         $this->showCheckBox();
@@ -63,9 +68,8 @@ final class BookingsUserTable extends PowerGridComponent
             ->select('bookings.*', 'newUsers.name as user_name')
 			;
 		*/
-		$user = auth()->user()->id;
 		
-		$join = Reservation::where('user_id', $user)
+		$join = Reservation::where('event_id', $this->eventid)
             ->join('users as newUsers', function ($users) 	{ $users->on('bookings.user_id', '=', 'newUsers.id'); })		
             ->join('events as newEvents', function ($events) 	{ $events->on('bookings.event_id', '=', 'newEvents.id'); })
             ->select('bookings.*', 
@@ -87,13 +91,6 @@ final class BookingsUserTable extends PowerGridComponent
             ->add('user_id')
             ->add('user_name')
             ->add('seats')
-			->add('link_event_id', fn ($reservation) => Blade::render('<x-event-link id="' . $reservation->event_id . '"/>'))			
-            ->add('event_id')
-            ->add('event_artist')
-            ->add('event_location')
-            ->add('event_start')
-            ->add('event_start_formatted', fn ($reservation) => Carbon::parse($reservation->event_start)->format('Y. m. d. H:i'). " ")
-            ->add('event_free')
             ->add('updated_at')
             ->add('updated_at_formatted', fn ($reservation) => Carbon::parse($reservation->updated_at)->format('Y. m. d. H:i:s'). " ");
     }
@@ -101,42 +98,8 @@ final class BookingsUserTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make('Event id', 'event_id')
-			->title('EID')
-			->sortable()
-			->hidden(isHidden: false, 
-			isForceHidden: false)			
-			->contentClasses('whitespace-normal! text-sm!'),
-			
-            Column::make('Event id', 'link_event_id')
-			->title('Esemény')
-			->hidden(isHidden: false, 
-			isForceHidden: false)			
-			->contentClasses('whitespace-normal! text-sm!'),
-
-            Column::make('Event id', 'event_artist', 'newEvents.artist')
-			->title('Előadó')
-			->sortable()
-			->contentClasses('whitespace-normal! text-sm!')			
-			,
-            Column::make('Event id', 'event_location', 'newEvents.location')
-			->title('Helyszín')
-			->sortable()
-			->searchable()
-			->contentClasses('whitespace-normal! text-sm!')			
-			,			
-            Column::make('Event id', 'event_start_formatted', 'newEvents.start')
-			->title('Dátum')
-			->sortable()
-			->contentClasses('whitespace-normal! text-sm!')
-			,
-            Column::make('Event id', 'event_free', 'newEvents.free')
-			->title('Szabad')
-			->sortable()
-			->contentClasses('whitespace-normal! text-sm!')
-			,		
             Column::make('Id', 'id')
-			->title('#RID')
+			->title('#')
 			->sortable()
 			->contentClasses('whitespace-normal! text-sm!')			
 			,
@@ -165,11 +128,9 @@ final class BookingsUserTable extends PowerGridComponent
 			->contentClasses('whitespace-normal! text-sm!')
 			,
             Column::action('Művelet')
-			->contentClasses('whitespace-normal! text-sm!'),			
+			->contentClasses('whitespace-normal! text-sm!'),		
         ];
     }
-
-	
     public function actions($row): array
     {
         return [
@@ -217,12 +178,11 @@ final class BookingsUserTable extends PowerGridComponent
             Filter::datetimepicker('updated_at_formatted')->params([
                     'only_future' => false,
             ]),
-			/*	
             Filter::select('user_name', 'user_id')
                 ->dataSource(User::all())
                 ->optionLabel('name')
                 ->optionValue('id'),
-			
+			/*	
             Filter::select('event_location', 'event_id')
                 ->dataSource(Event::all())
                 ->optionLabel('location')

@@ -27,7 +27,8 @@ use PowerComponents\LivewirePowerGrid\Responsive;
 final class EventsTable extends PowerGridComponent
 {
     public string $tableName = 'EventsTableGuest';
-	
+	public string $sortField = 'id'; 
+	public string $sortDirection = 'desc';	
 
 	
     public function boot(): void
@@ -65,7 +66,7 @@ final class EventsTable extends PowerGridComponent
     {
         return PowerGrid::fields()
             ->add('id')
-            ->add('name')
+            ->add('type')
             ->add('artist')
             ->add('location')
             
@@ -78,7 +79,7 @@ final class EventsTable extends PowerGridComponent
 			
             ->add('start_date', fn ($events) => Carbon::parse($events->start)->format('Y. m. d.'). " ")
             ->add('start_formatted', function ($events) { return date('H:i',strtotime($events->start)); }) 
-            ->add('stop_formatted', function ($events) { return date('H:i',strtotime($events->stop)); }) 
+            ->add('end_formatted', function ($events) { return date('H:i',strtotime($events->end)); }) 
             ->add('seats')
             ->add('free')
             ->add('sold', function ($events) { return $events->seats - $events->free;  })
@@ -89,13 +90,11 @@ final class EventsTable extends PowerGridComponent
     {
         return [
             Column::make('Id', 'id')
-			->title('#')
+			->title('EID')
 			->sortable()
 			->contentClasses('whitespace-normal! text-sm!')
 			->hidden(isHidden: false, 
 			isForceHidden: false),
-			
-
 
             Column::make('Artist', 'artist')
 				->title('Előadó')
@@ -103,7 +102,7 @@ final class EventsTable extends PowerGridComponent
                 ->sortable()
                 ->searchable(),
 
-            Column::make('Name', 'name')
+            Column::make('Type', 'type')
 				->title('Típus')
 				->contentClasses('whitespace-normal! text-sm!')
                 ->sortable()
@@ -126,7 +125,7 @@ final class EventsTable extends PowerGridComponent
 				->title('Kezdete')
 				->contentClasses('whitespace-normal! text-sm!'),
 				
-            Column::make('Stop', 'stop_formatted')
+            Column::make('End', 'end_formatted')
 				->title('Vége')
 				->contentClasses('whitespace-normal! text-sm!')
 				->contentClasses('whitespace-normal! text-sm!'),
@@ -171,7 +170,7 @@ final class EventsTable extends PowerGridComponent
             Filter::datetimepicker('start')->params([
                     'only_future' => true,
             ]),
-            Filter::datetimepicker('stop')->params([
+            Filter::datetimepicker('end')->params([
                     'only_future' => true,
             ]),
         ];
