@@ -28,6 +28,10 @@ php artisan migrate:fresh --seed
 npm run build
 ```
 
+## DEMO
+
+https://denwr.com/
+
 ## Képek
 ![Clipboard_05-05-2025_01](https://github.com/user-attachments/assets/515fbd52-8446-4909-9fea-a46570f6f11b)
 ![Képernyőkép 2025-05-05 – 08 52 00](https://github.com/user-attachments/assets/7b6647df-1b45-474c-9bb4-3f8aabf14ba9)
