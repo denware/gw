@@ -20,17 +20,15 @@ Egy Laravel keretrendszer alapú alkalmazás készítése, ami különböző ese
 ## Install
 ```
 composer install
+npm install
 ```
+
 Ezután az env.example fájlt nevezzük el .env-re és állítsuk be a környezetet.
 
 ```
 php artisan migrate:fresh --seed
 npm run build
 ```
-
-## DEMO
-
-https://denwr.com/
 
 ## Képek
 ![Clipboard_05-05-2025_01](https://github.com/user-attachments/assets/515fbd52-8446-4909-9fea-a46570f6f11b)
