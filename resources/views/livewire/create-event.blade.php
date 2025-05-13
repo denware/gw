@@ -62,9 +62,6 @@
 		</div>			
 		@script
 		<script>
-		const write = function(value){
-			dm.value = value;
-		}
 		let startValue;
 		let startTime;
 		const end = flatpickr(".flatpickr-end", {
@@ -96,7 +93,7 @@
 					startTime = new Date(startTime);
 					startTime = ("0" + startTime.getHours()).slice(-2)   + ":" + 
 								("0" + startTime.getMinutes()).slice(-2);
-					end.config.enable = [selectedDates[0]];
+					end.config.enable = [startValue];
 					end.config.minTime = startTime;
 					end.redraw();
 					console.log(startTime);

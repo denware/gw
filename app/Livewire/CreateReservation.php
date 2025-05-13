@@ -30,6 +30,7 @@ class CreateReservation extends Component {
 	public $event_id;
 	public $user_id;
 	public $seats;
+	public $selected_event;
 	
 
     public function mount($event)
@@ -54,13 +55,20 @@ class CreateReservation extends Component {
 		Reservation::where('id', $id )-> delete();
 		*/
 		
-		//$this->js("alert('Delete #{dd($this->seats)}')");
+		$selected_event = Event::find($this->event_id);
+		$selected_event->free = $selected_event->free - $this->seats;
+		$selected_event->save();
+		
+	//$this->js("alert('{{$selected_event->free}}')");
+		
 		
 		Reservation::create([
             'event_id' => $this->event_id,
             'user_id' => $this->user_id,
             'seats' => $this->seats,
         ]);
+		
+		
 		Toaster::success(  "Sikeres foglalás!" );
 		
         return redirect()->to('/event/'. $this->event_id);

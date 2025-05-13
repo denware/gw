@@ -158,7 +158,7 @@ final class BookingsEventUserTable extends PowerGridComponent
 		Toaster::warning(  "A rekordot töröltük az adatbázisból!" );
 		/**/
 		//$user = auth()->user()->id;
-		
+		return redirect()->to('/event/'. $row->event_id);
 		//$this->js("alert('User #{ $user  }')");
     }
 	
