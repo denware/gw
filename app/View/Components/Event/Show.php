@@ -5,6 +5,7 @@ namespace App\View\Components\Event;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Livewire\Attributes\On;
 
 class Show extends Component
 {

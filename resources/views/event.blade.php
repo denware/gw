@@ -49,38 +49,39 @@
             @endif
         </header>
         <div class="flex w-full justify-center grow transition-opacity opacity-100 duration-750 starting:opacity-0">
-            <main class="w-full lg:max-w-4xl max-w-[335px] ">		
-			@auth
-				<!-- registered users -->
-				@if (auth()->user()->role ==='user')
-					<div class="w-full lg:max-w-4xl max-w-[335px] text-right dark:text-white">Helló Normál felhasználó!</div>
-				@endif
-				<!-- admin user -->
-				@if (auth()->user()->role ==='admin')
-					<div class="w-full lg:max-w-4xl max-w-[335px] text-right dark:text-white">Helló Admin felhasználó!</div>	
-				@endif
-			@endauth
-			<!-- guest -->
-			@guest
-					<div class="w-full lg:max-w-4xl max-w-[335px] text-right dark:text-white">Helló vendég!</div>
-			@endguest
-			 <x-event.show :event="$event"/>
+            <main class="w-full lg:max-w-4xl max-w-[335px] ">			 
 			@auth
 				@if (auth()->user()->role ==='admin')
+					<!-- admin user -->
+					<div class="w-full lg:max-w-4xl max-w-[335px] text-right dark:text-white">Helló Admin felhasználó!</div>
+					<x-event.show :event="$event"/>
 					<div class="w-full justify-center mt-8 mb-16 p-8 flex flex-row justify-center items-center gap-4 shadow-2xl rounded-md border-1 border-solid border-[#ddd]  dark:bg-[#111] dark:border-[#222] dark:text-white">
 						<h1 class="w-full text-3xl font-[Calibri] font-black text-black dark:text-white">Esemény szerkesztése</h1>
 						<a  href="/admin/edit-event/{{$event->id}}" class="rounded-md bg-indigo-600 px-8 py-3 text-sm font-semibold text-white shadow-xs text-white! bg-[#00A0E3]! hover:bg-[#0080B3]! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer" type="submit">Szerkesztés</a>
 					</div>
 					<h1 class="mt-8 mb-8 w-full lg:max-w-4xl max-w-[335px] text-3xl font-[Calibri] font-black text-black dark:text-white">Az eseményhez tartozó foglalások</h1>
-					<div class="mb-24"><livewire:bookings-event-table :eventid="$event->id"  /><div>
+					<div class="mb-24">
+						<livewire:bookings-event-table :eventid="$event->id"  />
+					<div>
 				@endif
 				@if (auth()->user()->role ==='user')
-					
-					<div class="mt-8 mb-24"><livewire:create-reservation :eventid="$event->id"/><div>
+					<!-- registered users -->
+					<div class="w-full lg:max-w-4xl max-w-[335px] text-right dark:text-white">Helló Normál felhasználó!</div>
+					<x-event.show :event="$event"/>
+					<div class="mt-8 mb-24">
+						<livewire:create-reservation :event="$event"/>
+					<div>
 					<h1 class="mt-8 mb-8 w-full lg:max-w-4xl max-w-[335px] text-3xl font-[Calibri] font-black text-black dark:text-white">Az eseményhez tartozó foglalásaim</h1>
-					<div class="mb-24"><livewire:bookings-event-user-table :eventid="$event->id"/><div>
+					<div class="mb-24">
+					<livewire:bookings-event-user-table :eventid="$event->id"/>
+					<div>
 				@endif				
-			@endauth	
+			@endauth
+			<!-- guest -->
+			@guest
+					<div class="w-full lg:max-w-4xl max-w-[335px] text-right dark:text-white">Helló vendég!</div>
+					<x-event.show :event="$event"/>
+			@endguest			
             </main>
         </div>
 		<footer class="">

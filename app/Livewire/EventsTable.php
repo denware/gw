@@ -26,17 +26,17 @@ use PowerComponents\LivewirePowerGrid\Responsive;
 
 final class EventsTable extends PowerGridComponent
 {
-    public string $tableName = 'EventsTableGuest';
+    public string $tableName = 'EventsTable';
 	public string $sortField = 'id'; 
 	public string $sortDirection = 'desc';	
-
+	public bool $showFilters = false;
 	
     public function boot(): void
     {	
-        config(['livewire-powergrid.filter' => 'inside']);
+        config(['livewire-powergrid.filter' => 'outside']);
 
     }	
-	public bool $showFilters = true;
+	
     public function setUp(): array
     {
         //$this->showCheckBox();
@@ -173,6 +173,11 @@ final class EventsTable extends PowerGridComponent
             Filter::datetimepicker('end')->params([
                     'only_future' => true,
             ]),
+            Filter::datetimepicker('start_date', 'events.start')
+					->params([
+                    'only_future' => false,
+					'enableTime' => false,
+            ]),			
         ];
     }
 

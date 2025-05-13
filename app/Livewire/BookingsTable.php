@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Models\Event;
+use Closure;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -93,7 +94,6 @@ final class BookingsTable extends PowerGridComponent
             ->add('event_start')
             ->add('event_start_formatted', fn ($reservation) => Carbon::parse($reservation->event_start)->format('Y. m. d. H:i'). " ")
             ->add('event_free')
-            ->add('updated_at')
             ->add('updated_at_formatted', fn ($reservation) => Carbon::parse($reservation->updated_at)->format('Y. m. d. H:i:s'). " ")
 			->add('action');
     }
@@ -111,7 +111,8 @@ final class BookingsTable extends PowerGridComponent
             Column::make('Event id', 'link_event_id')
 			->title('Esemény')
 			->hidden(isHidden: false, 
-			isForceHidden: false)			
+			isForceHidden: false)
+			->visibleInExport(visible: false)
 			->contentClasses('whitespace-normal! text-sm!'),
 
             Column::make('Event id', 'event_artist', 'newEvents.artist')
@@ -135,21 +136,18 @@ final class BookingsTable extends PowerGridComponent
 			->sortable()
 			->contentClasses('whitespace-normal! text-sm!')
 			,
-            Column::make('Id', 'id')
-			->title('#RID')
+            Column::make('#RID', 'id')
 			->sortable()
 			->contentClasses('whitespace-normal! text-sm!')			
 			,
-            Column::make('User id', 'user_id')
-			->title('Vásárló')
+            Column::make('Vásárló neve', 'user_id')
 			->sortable()
 			->searchable()
 			->contentClasses('whitespace-normal! text-sm!')
 			->hidden(isHidden: true, 
 			isForceHidden: true)			
 			,
-            Column::make('User id', 'user_name', 'newUsers.name')
-			->title('Vásárló neve')
+            Column::make('Vásárló neve', 'user_name', 'newUsers.name')
 			->sortable()
 			->searchable()
 			->contentClasses('whitespace-normal! text-sm!')			
@@ -159,9 +157,9 @@ final class BookingsTable extends PowerGridComponent
 			->sortable()
 			->contentClasses('whitespace-normal! text-sm!')
 			,
-            Column::make('Updated at', 'updated_at_formatted')
-			->title('Időpont')
-			->searchable()
+			
+			Column::make('Időpont', 'updated_at_formatted', 'updated_at')
+			->sortable()
 			->contentClasses('whitespace-normal! text-sm!')
 			,
             Column::action('Művelet')
@@ -240,21 +238,20 @@ final class BookingsTable extends PowerGridComponent
 				->operators(['contains'])
                 ->filterRelation('event', 'location'),
 				
-            Filter::datetimepicker('updated_at_formatted')->params([
+            Filter::datetimepicker('updated_at_formatted', 'bookings.updated_at')
+					->params([
                     'only_future' => false,
+					'enableTime' => false,
             ]),
             Filter::select('user_name', 'user_id')
                 ->dataSource(User::all())
                 ->optionLabel('name')
                 ->optionValue('id'),
-			/*	
-            Filter::select('event_location', 'event_id')
-                ->dataSource(Event::all())
-                ->optionLabel('location')
-                ->optionValue('id'),				
-			*/
-            Filter::datetimepicker('event_start')->params([
+
+            Filter::datetimepicker('event_start_formatted', 'newEvents.start')->params([
                     'only_future' => false,
+					'enableTime' => false,
+					
             ]),
 
         ];

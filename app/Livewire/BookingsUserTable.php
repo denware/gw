@@ -34,7 +34,7 @@ use Masmerise\Toaster\Toaster;
 final class BookingsUserTable extends PowerGridComponent
 {
 	use WithExport; 
-    public string $tableName = 'bookings-table-mnbeei-table';
+    public string $tableName = 'bookings-user-table';
 	public bool $showFilters = true;
 
 	
@@ -159,9 +159,8 @@ final class BookingsUserTable extends PowerGridComponent
 			->sortable()
 			->contentClasses('whitespace-normal! text-sm!')
 			,
-            Column::make('Updated at', 'updated_at_formatted')
-			->title('Időpont')
-			->searchable()
+			Column::make('Időpont', 'updated_at_formatted', 'updated_at')
+			->sortable()
 			->contentClasses('whitespace-normal! text-sm!')
 			,
             Column::action('Művelet')
@@ -197,10 +196,6 @@ final class BookingsUserTable extends PowerGridComponent
 		//$this->js("alert('Delete #{dd($row)}')");
 		
 		Toaster::warning(  "A rekordot töröltük az adatbázisból!" );
-		/**/
-		//$user = auth()->user()->id;
-		
-		//$this->js("alert('User #{ $user  }')");
     }
 	
     public function filters(): array
@@ -231,7 +226,11 @@ final class BookingsUserTable extends PowerGridComponent
             Filter::datetimepicker('event_start')->params([
                     'only_future' => false,
             ]),
-
+            Filter::datetimepicker('updated_at_formatted', 'bookings.updated_at')
+					->params([
+                    'only_future' => false,
+					'enableTime' => false,
+            ]),
         ];
     }
 

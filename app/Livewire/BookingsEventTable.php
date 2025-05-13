@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Request;
 
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
@@ -37,11 +36,9 @@ use Masmerise\Toaster\Toaster;
 final class BookingsEventTable extends PowerGridComponent
 {
 	use WithExport; 
-    public string $tableName = 'bookings-table-mnbeei-table';
+    public string $tableName = 'bookings-event--table';
 	public bool $showFilters = true;
 	public ?string $eventid;
-	
-
 	 
     public function setUp(): array
     {

@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,7 @@ use Illuminate\Validation\Rules;
 use Livewire\Attributes\On;
 use Livewire\Volt\Component;
 
+use Livewire\Attributes\Url;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Facades\Filter;
@@ -34,7 +36,7 @@ use Masmerise\Toaster\Toaster;
 final class BookingsEventUserTable extends PowerGridComponent
 {
 	use WithExport; 
-    public string $tableName = 'bookings-table-mnbeei-table';
+    public string $tableName = 'bookings-event-user-table';
 	public bool $showFilters = true;
 	public ?string $eventid;
 	
@@ -119,9 +121,8 @@ final class BookingsEventUserTable extends PowerGridComponent
 			->sortable()
 			->contentClasses('whitespace-normal! text-sm!')
 			,
-            Column::make('Updated at', 'updated_at_formatted')
-			->title('Időpont')
-			->searchable()
+			Column::make('Időpont', 'updated_at_formatted', 'updated_at')
+			->sortable()
 			->contentClasses('whitespace-normal! text-sm!')
 			,
             Column::action('Művelet')
@@ -186,6 +187,11 @@ final class BookingsEventUserTable extends PowerGridComponent
                 ->optionLabel('location')
                 ->optionValue('id'),				
 			*/
+            Filter::datetimepicker('updated_at_formatted', 'bookings.updated_at')
+					->params([
+                    'only_future' => false,
+					'enableTime' => false,
+            ]),
             Filter::datetimepicker('event_start')->params([
                     'only_future' => false,
             ]),
